@@ -1,6 +1,11 @@
 package kafka.producer.HardWareUsage;
 
 public class TotalMemDetail {
+    /*
+    ***** Important *****
+    FOR USE JSON DAO MUST TAKE DEFAULT CONSTRUCTOR
+    ***** Important *****
+    */
     private String Used;
     private String Unused;
 

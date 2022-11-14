@@ -7,6 +7,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -27,7 +28,7 @@ public class ProducerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProducerApplication.class, args);
-		/*
+
 		final String TOPIC_NAME = "fooo";
 		String bootstrapServer = args[0] + ":9092";
 		System.out.println("bootstrap server : " + bootstrapServer);
@@ -36,10 +37,13 @@ public class ProducerApplication {
 		Properties properties = new Properties();
 		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
 		properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class.getName());
+		/*
+		JSONSERIALIZER ADD_TYPE_INFO_HEADERS can serializer infer type of JSON Object
+		 */
+		properties.put(JsonSerializer.ADD_TYPE_INFO_HEADERS,HardWareUsageDAO.class.getName());
+		KafkaProducer<String, HardWareUsageDAO> producer = new KafkaProducer<>(properties);
 
-		KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
-		*/
 
 		// object to HardWareUsageDAO
 		TotalCpuDetail cpuDetail = null;
@@ -47,10 +51,8 @@ public class ProducerApplication {
 		TotalDiskDetail diskDetail = null;
 		List<TopProcessDetail> topRateProcess = new ArrayList<>();
 		HardWareUsageDAO hardWareUsageDAO = new HardWareUsageDAO();
-
+		hardWareUsageDAO.setEC2Number(args[1]);
 		while (true) {
-
-
 			String sendOutStr = ""; // the output string to be sent to kafka broker
 			String temp;
 			Process p;
@@ -79,7 +81,7 @@ public class ProducerApplication {
 
 					} else if (lineNumber == secondRound + 6) { // PhysMem
 						String[] temp_str = temp.split(" ");
-						memDetail = new TotalMemDetail(temp_str[1], temp_str[7]);
+						memDetail = new TotalMemDetail(temp_str[1], temp_str[5]);
 
 					} else if (lineNumber == secondRound + 9) { // Disks
 						String[] temp_str = temp.split(" ");
@@ -112,20 +114,19 @@ public class ProducerApplication {
 
 			hardWareUsageDAO.setCPU(cpuDetail).setDISK(diskDetail).setMEM(memDetail).setTopRateProcess((ArrayList<TopProcessDetail>) topRateProcess);
 
-			System.out.println(hardWareUsageDAO);
 
 
 			// sending kafka
-			/*
-			ProducerRecord<String, String> record = new ProducerRecord<String, String>(TOPIC_NAME, sendOutStr);
+			ProducerRecord<String, HardWareUsageDAO> record = new ProducerRecord<String, HardWareUsageDAO>(TOPIC_NAME, hardWareUsageDAO);
 			try {
 				producer.send(record);
-				System.out.println(sendOutStr);
+//				System.out.println(sendOutStr);
+				System.out.println(hardWareUsageDAO);
 				Thread.sleep(500);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			 */
+
 
 		}
 	}
