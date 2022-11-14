@@ -1,6 +1,11 @@
 package kafka.producer.HardWareUsage;
 
 public class TotalDiskDetail {
+    /*
+    ***** Important *****
+    FOR USE JSON DAO MUST TAKE DEFAULT CONSTRUCTOR
+    ***** Important *****
+    */
     private String Read;
     private String Write;
 

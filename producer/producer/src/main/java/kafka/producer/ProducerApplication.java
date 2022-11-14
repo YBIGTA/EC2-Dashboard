@@ -38,7 +38,10 @@ public class ProducerApplication {
 		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
 		properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class.getName());
-
+		/*
+		JSONSERIALIZER ADD_TYPE_INFO_HEADERS can serializer infer type of JSON Object
+		 */
+		properties.put(JsonSerializer.ADD_TYPE_INFO_HEADERS,HardWareUsageDAO.class.getName());
 		KafkaProducer<String, HardWareUsageDAO> producer = new KafkaProducer<>(properties);
 
 
@@ -48,7 +51,7 @@ public class ProducerApplication {
 		TotalDiskDetail diskDetail = null;
 		List<TopProcessDetail> topRateProcess = new ArrayList<>();
 		HardWareUsageDAO hardWareUsageDAO = new HardWareUsageDAO();
-
+		hardWareUsageDAO.setEC2Number(args[1]);
 		while (true) {
 			String sendOutStr = ""; // the output string to be sent to kafka broker
 			String temp;
@@ -78,7 +81,7 @@ public class ProducerApplication {
 
 					} else if (lineNumber == secondRound + 6) { // PhysMem
 						String[] temp_str = temp.split(" ");
-						memDetail = new TotalMemDetail(temp_str[1], temp_str[7]);
+						memDetail = new TotalMemDetail(temp_str[1], temp_str[5]);
 
 					} else if (lineNumber == secondRound + 9) { // Disks
 						String[] temp_str = temp.split(" ");

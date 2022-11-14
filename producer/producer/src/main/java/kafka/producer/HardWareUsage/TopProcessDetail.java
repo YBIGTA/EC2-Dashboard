@@ -1,6 +1,11 @@
 package kafka.producer.HardWareUsage;
 
 public class TopProcessDetail {
+    /*
+    ***** Important *****
+    FOR USE JSON DAO MUST TAKE DEFAULT CONSTRUCTOR
+    ***** Important *****
+    */
     private String PID;
     private String COMMAND;
     private String CPUusage;
