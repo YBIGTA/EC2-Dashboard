@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -55,7 +56,12 @@ public class ProducerApplication {
 		hardWareUsageDAO.setEC2Number(args[1]);
 
 		// parsing "TOP COMMAND"
+		int staringPoint=0;
 		while (true) {
+			if (staringPoint == 0) {
+				staringPoint++;
+				continue;
+			}
 
 			String sendOutStr = ""; // the output string to be sent to kafka broker
 			String temp;
@@ -81,7 +87,9 @@ public class ProducerApplication {
 
 					// PARSING
 					if (lineNumber == 2) { // parsing CPU
+						System.out.println(Arrays.toString(temp_str));
 						cpuDetail = new TotalCpuDetail(temp_str[1], temp_str[3]);
+						System.out.println(cpuDetail.toString());
 
 					} else if (lineNumber == 3) { // parsing PhysMem
 						memDetail = new TotalMemDetail(temp_str[7], temp_str[5]);
