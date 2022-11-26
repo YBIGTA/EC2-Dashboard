@@ -6,8 +6,8 @@ public class TotalDiskDetail {
     FOR USE JSON DAO MUST TAKE DEFAULT CONSTRUCTOR
     ***** Important *****
     */
-    private String Read;
-    private String Write;
+    private float Read;
+    private float Write;
 
     @Override
     public String toString() {
@@ -17,25 +17,25 @@ public class TotalDiskDetail {
                 '}';
     }
 
-    public String getRead() {
+    public float getRead() {
         return Read;
     }
 
-    public TotalDiskDetail setRead(String read) {
+    public TotalDiskDetail setRead(float read) {
         Read = read;
         return this;
     }
 
-    public String getWrite() {
+    public float getWrite() {
         return Write;
     }
 
-    public TotalDiskDetail setWrite(String write) {
+    public TotalDiskDetail setWrite(float write) {
         Write = write;
         return this;
     }
 
-    public TotalDiskDetail(String read, String write) {
+    public TotalDiskDetail(float read, float write) {
         Read = read;
         Write = write;
     }

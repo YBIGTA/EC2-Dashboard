@@ -6,9 +6,9 @@ public class TotalCpuDetail {
     FOR USE JSON DAO MUST TAKE DEFAULT CONSTRUCTOR
     ***** Important *****
     */
-    private String User;
+    private float User;
 
-    private String System;
+    private float System;
 
     @Override
     public String toString() {
@@ -20,25 +20,25 @@ public class TotalCpuDetail {
 
 
 
-    public TotalCpuDetail(String user, String system) {
+    public TotalCpuDetail(float user, float system) {
         User = user;
         System = system;
     }
 
-    public String getUser() {
+    public float getUser() {
         return User;
     }
 
-    public TotalCpuDetail setUser(String user) {
+    public TotalCpuDetail setUser(float user) {
         User = user;
         return this;
     }
 
-    public String getSystem() {
+    public float getSystem() {
         return System;
     }
 
-    public TotalCpuDetail setSystem(String system) {
+    public TotalCpuDetail setSystem(float system) {
         System = system;
         return this;
     }

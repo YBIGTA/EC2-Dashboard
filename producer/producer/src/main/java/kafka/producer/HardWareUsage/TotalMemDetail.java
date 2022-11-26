@@ -6,8 +6,8 @@ public class TotalMemDetail {
     FOR USE JSON DAO MUST TAKE DEFAULT CONSTRUCTOR
     ***** Important *****
     */
-    private String Used;
-    private String Unused;
+    private float Used;
+    private float Unused;
 
     @Override
     public String toString() {
@@ -17,25 +17,25 @@ public class TotalMemDetail {
                 '}';
     }
 
-    public TotalMemDetail(String used, String unused) {
+    public TotalMemDetail(float used, float unused) {
         Used = used;
         Unused = unused;
     }
 
-    public String getUsed() {
+    public float getUsed() {
         return Used;
     }
 
-    public TotalMemDetail setUsed(String used) {
+    public TotalMemDetail setUsed(float used) {
         Used = used;
         return this;
     }
 
-    public String getUnused() {
+    public float getUnused() {
         return Unused;
     }
 
-    public TotalMemDetail setUnused(String unused) {
+    public TotalMemDetail setUnused(float unused) {
         Unused = unused;
         return this;
     }

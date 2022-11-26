@@ -31,20 +31,21 @@ public class ProducerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProducerApplication.class, args);
 
-		final String TOPIC_NAME = "fooo";
-		String bootstrapServer = args[0] + ":9092";
-		System.out.println("bootstrap server : " + bootstrapServer);
 
-
-		Properties properties = new Properties();
-		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-		properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class.getName());
-		/*
-		JSONSERIALIZER ADD_TYPE_INFO_HEADERS can serializer infer type of JSON Object
-		 */
-		properties.put(JsonSerializer.ADD_TYPE_INFO_HEADERS,HardWareUsageDAO.class.getName());
-		KafkaProducer<String, HardWareUsageDAO> producer = new KafkaProducer<>(properties);
+//		final String TOPIC_NAME = "fooo";
+//		String bootstrapServer = args[0] + ":9092";
+//		System.out.println("bootstrap server : " + bootstrapServer);
+//
+//
+//		Properties properties = new Properties();
+//		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+//		properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+//		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class.getName());
+//		/*
+//		JSONSERIALIZER ADD_TYPE_INFO_HEADERS can serializer infer type of JSON Object
+//		 */
+//		properties.put(JsonSerializer.ADD_TYPE_INFO_HEADERS,HardWareUsageDAO.class.getName());
+//		KafkaProducer<String, HardWareUsageDAO> producer = new KafkaProducer<>(properties);
 
 
 		// object to HardWareUsageDAO
@@ -88,15 +89,15 @@ public class ProducerApplication {
 					// PARSING
 					if (lineNumber == 2) { // parsing CPU
 						System.out.println(Arrays.toString(temp_str));
-						cpuDetail = new TotalCpuDetail(temp_str[1], temp_str[3]);
+						cpuDetail = new TotalCpuDetail(Float.parseFloat(temp_str[1]), Float.parseFloat(temp_str[3]));
 						System.out.println(cpuDetail.toString());
 
 					} else if (lineNumber == 3) { // parsing PhysMem
-						memDetail = new TotalMemDetail(temp_str[7], temp_str[5]);
+						memDetail = new TotalMemDetail(Float.parseFloat(temp_str[7]), Float.parseFloat(temp_str[5]));
 
 					} else if (lineNumber > 6) { // parsing ProcessDetail;
 						if (Float.parseFloat(temp_str[9]) >= 1.0 ) {
-							TopProcessDetail topProcessDetail = new TopProcessDetail(temp_str[1], temp_str[12], temp_str[9], temp_str[11], temp_str[10], temp_str[8]);
+							TopProcessDetail topProcessDetail = new TopProcessDetail(Integer.parseInt(temp_str[1]), temp_str[12], Float.parseFloat(temp_str[9]), temp_str[11], Float.parseFloat(temp_str[10]), temp_str[8]);
 							topRateProcess.add(topProcessDetail);
 						}
 						
@@ -121,7 +122,10 @@ public class ProducerApplication {
 				br.readLine(); // firstline like "Filesystem/Size/Used/Avail/Use%/Mounted on"
 				String[] tempDisk = br.readLine().split("\\s+");
 
-				diskDetail = new TotalDiskDetail(tempDisk[2], tempDisk[3]);
+				String readDisk = tempDisk[2].substring(0, tempDisk[2].length()-1);
+				String writeDisk = tempDisk[3].substring(0, tempDisk[3].length()-1);
+
+				diskDetail = new TotalDiskDetail(Float.parseFloat(readDisk), Float.parseFloat(writeDisk));
 
 				p.waitFor();
 				p.destroy();
@@ -131,8 +135,9 @@ public class ProducerApplication {
 
 
 			hardWareUsageDAO.setCPU(cpuDetail).setDISK(diskDetail).setMEM(memDetail).setTopRateProcess((ArrayList<TopProcessDetail>) topRateProcess);
+			System.out.println(hardWareUsageDAO);
 
-
+			/*
 			// sending kafka
 			ProducerRecord<String, HardWareUsageDAO> record = new ProducerRecord<String, HardWareUsageDAO>(TOPIC_NAME, hardWareUsageDAO);
 			try {
@@ -142,6 +147,8 @@ public class ProducerApplication {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
+			 */
 
 		}
 	}
