@@ -57,12 +57,7 @@ public class ProducerApplication {
 		hardWareUsageDAO.setEC2Number(args[1]);
 
 		// parsing "TOP COMMAND"
-		int staringPoint=0;
 		while (true) {
-			if (staringPoint == 0) {
-				staringPoint++;
-				continue;
-			}
 
 			String sendOutStr = ""; // the output string to be sent to kafka broker
 			String temp;
@@ -89,7 +84,12 @@ public class ProducerApplication {
 					// PARSING
 					if (lineNumber == 2) { // parsing CPU
 						System.out.println(Arrays.toString(temp_str));
-						cpuDetail = new TotalCpuDetail(Float.parseFloat(temp_str[1]), Float.parseFloat(temp_str[3]));
+						if (temp_str[1].equals("us,")) {
+							cpuDetail = new TotalCpuDetail(0, 0);
+						} else {
+							cpuDetail = new TotalCpuDetail(Float.parseFloat(temp_str[1]), Float.parseFloat(temp_str[3]));
+						}
+
 						System.out.println(cpuDetail.toString());
 
 					} else if (lineNumber == 3) { // parsing PhysMem
