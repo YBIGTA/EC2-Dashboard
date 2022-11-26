@@ -1,6 +1,7 @@
 package kafka.consumer.commonSerialization;
 
 import kafka.consumer.AvgUsage.AvgUsage;
+
 import kafka.consumer.HardWareUsage.HardWareUsageDAO;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;

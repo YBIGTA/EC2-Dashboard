@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HardWareUsageDAO {
+
     /*
     TotalCpuDetail
         CPU HardWare Total Usage
@@ -16,29 +17,33 @@ public class HardWareUsageDAO {
         This is divided into [Read, Write]
     TopProcessDetail
         This is COMMAND TOP result where ranked top 5
-        This is consist of [PID, COMMAND, CPUusage, Time, Mem, State]
+        This is consist of [PID, COMMAND, CPUusag˜e, Time, Mem, State]
     ***** Important *****
     FOR USE JSON DAO MUST TAKE DEFAULT CONSTRUCTOR
     ***** Important *****
      */
+
+
+
     private String EC2Number;
     private TotalCpuDetail CPU;
     private TotalMemDetail MEM;
     private TotalDiskDetail DISK;
     private List<TopProcessDetail> TopRateProcess;
 
+
+
     public HardWareUsageDAO() {
         this.TopRateProcess = new ArrayList<TopProcessDetail>();
     }
 
-    public HardWareUsageDAO(TotalCpuDetail CPU, TotalMemDetail MEM, TotalDiskDetail DISK, List<TopProcessDetail> topRateProcess, String ec2Number) {
+    public HardWareUsageDAO(String EC2Number, TotalCpuDetail CPU, TotalMemDetail MEM, TotalDiskDetail DISK, List<TopProcessDetail> topRateProcess) {
+        this.EC2Number = EC2Number;
         this.CPU = CPU;
         this.MEM = MEM;
         this.DISK = DISK;
-        this.EC2Number = ec2Number;
-        this.TopRateProcess = new ArrayList<TopProcessDetail>();
+        TopRateProcess = topRateProcess;
     }
-
 
     public String getEC2Number() {
         return EC2Number;
@@ -48,6 +53,7 @@ public class HardWareUsageDAO {
         this.EC2Number = EC2Number;
         return this;
     }
+
 
     public TotalCpuDetail getCPU() {
         return CPU;
@@ -88,8 +94,6 @@ public class HardWareUsageDAO {
     public void addTopRateProcess(TopProcessDetail tpd) {
         this.TopRateProcess.add(tpd);
     }
-
-
 
     @Override
     public String toString() {

@@ -2,35 +2,29 @@ package kafka.consumer.AvgUsage;
 
 
 import kafka.consumer.HardWareUsage.HardWareUsageDAO;
-import kafka.consumer.HardWareUsage.TotalCpuDetail;
-import kafka.consumer.HardWareUsage.TotalDiskDetail;
-import kafka.consumer.HardWareUsage.TotalMemDetail;
-
-import java.sql.SQLOutput;
-
 
 public class AvgUsage {
-    public static double cnt =1;
-    private static double TotalUserCPU=0;
-    private static double TotalSysCPU=0;
-    private static double TotalUsedMem=0;
+    public static float cnt =1;
+    private static float TotalUserCPU=0;
+    private static float TotalSysCPU=0;
+    private static float TotalUsedMem=0;
 
     private static boolean ERROR = false;
 
     private String EC2_Name;
-    private double AvgUserCpu;
-    private double AvgSysCpu;
-    private String MaxDiskRead;
-    private String MaxDiskWrite;
-    private double AvgUsedMem;
+    private float AvgUserCpu;
+    private float AvgSysCpu;
+    private float MaxDiskRead;
+    private float MaxDiskWrite;
+    private float AvgUsedMem;
 
     private boolean error;
 
     public void parser(HardWareUsageDAO hardWareUsageDAO){
         System.out.println(hardWareUsageDAO.getCPU().getUser());
-        TotalUserCPU += Double.parseDouble(hardWareUsageDAO.getCPU().getUser());
-        TotalSysCPU += Double.parseDouble(hardWareUsageDAO.getCPU().getSystem());
-        TotalUsedMem += Double.parseDouble(hardWareUsageDAO.getMEM().getUsed());
+        TotalUserCPU += hardWareUsageDAO.getCPU().getUser();
+        TotalSysCPU += hardWareUsageDAO.getCPU().getSystem();
+        TotalUsedMem += hardWareUsageDAO.getMEM().getUsed();
 
         this.setAvgSysCpu(TotalSysCPU/cnt);
         this.setAvgUserCpu(TotalUserCPU/cnt);
@@ -67,6 +61,46 @@ public class AvgUsage {
                 '}';
     }
 
+    public static float getCnt() {
+        return cnt;
+    }
+
+    public static void setCnt(float cnt) {
+        AvgUsage.cnt = cnt;
+    }
+
+    public static float getTotalUserCPU() {
+        return TotalUserCPU;
+    }
+
+    public static void setTotalUserCPU(float totalUserCPU) {
+        TotalUserCPU = totalUserCPU;
+    }
+
+    public static float getTotalSysCPU() {
+        return TotalSysCPU;
+    }
+
+    public static void setTotalSysCPU(float totalSysCPU) {
+        TotalSysCPU = totalSysCPU;
+    }
+
+    public static float getTotalUsedMem() {
+        return TotalUsedMem;
+    }
+
+    public static void setTotalUsedMem(float totalUsedMem) {
+        TotalUsedMem = totalUsedMem;
+    }
+
+    public static boolean isERROR() {
+        return ERROR;
+    }
+
+    public static void setERROR(boolean ERROR) {
+        AvgUsage.ERROR = ERROR;
+    }
+
     public String getEC2_Name() {
         return EC2_Name;
     }
@@ -76,47 +110,47 @@ public class AvgUsage {
         return this;
     }
 
-    public double getAvgUserCpu() {
+    public float getAvgUserCpu() {
         return AvgUserCpu;
     }
 
-    public AvgUsage setAvgUserCpu(double avgUserCpu) {
+    public AvgUsage setAvgUserCpu(float avgUserCpu) {
         AvgUserCpu = avgUserCpu;
         return this;
     }
 
-    public double getAvgSysCpu() {
+    public float getAvgSysCpu() {
         return AvgSysCpu;
     }
 
-    public AvgUsage setAvgSysCpu(double avgSysCpu) {
+    public AvgUsage setAvgSysCpu(float avgSysCpu) {
         AvgSysCpu = avgSysCpu;
         return this;
     }
 
-    public String getMaxDiskRead() {
+    public float getMaxDiskRead() {
         return MaxDiskRead;
     }
 
-    public AvgUsage setMaxDiskRead(String maxDiskRead) {
+    public AvgUsage setMaxDiskRead(float maxDiskRead) {
         MaxDiskRead = maxDiskRead;
         return this;
     }
 
-    public String getMaxDiskWrite() {
+    public float getMaxDiskWrite() {
         return MaxDiskWrite;
     }
 
-    public AvgUsage setMaxDiskWrite(String maxDiskWrite) {
+    public AvgUsage setMaxDiskWrite(float maxDiskWrite) {
         MaxDiskWrite = maxDiskWrite;
         return this;
     }
 
-    public double getAvgUsedMem() {
+    public float getAvgUsedMem() {
         return AvgUsedMem;
     }
 
-    public AvgUsage setAvgUsedMem(double avgUsedMem) {
+    public AvgUsage setAvgUsedMem(float avgUsedMem) {
         AvgUsedMem = avgUsedMem;
         return this;
     }

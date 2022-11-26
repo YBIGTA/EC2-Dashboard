@@ -6,11 +6,11 @@ public class TopProcessDetail {
     FOR USE JSON DAO MUST TAKE DEFAULT CONSTRUCTOR
     ***** Important *****
     */
-    private String PID;
+    private int PID;
     private String COMMAND;
-    private String CPUusage;
+    private float CPUusage;
     private String Time;
-    private String Mem;
+    private float Mem;
     private String State;
 
 
@@ -30,7 +30,7 @@ public class TopProcessDetail {
     public TopProcessDetail() {
     }
 
-    public TopProcessDetail(String PID, String COMMAND, String CPUusage, String time, String mem, String state) {
+    public TopProcessDetail(int PID, String COMMAND, float CPUusage, String time, float mem, String state) {
         this.PID = PID;
         this.COMMAND = COMMAND;
         this.CPUusage = CPUusage;
@@ -39,11 +39,11 @@ public class TopProcessDetail {
         this.State = state;
     }
 
-    public String getPID() {
+    public int getPID() {
         return PID;
     }
 
-    public TopProcessDetail setPID(String PID) {
+    public TopProcessDetail setPID(int PID) {
         this.PID = PID;
         return this;
     }
@@ -57,11 +57,11 @@ public class TopProcessDetail {
         return this;
     }
 
-    public String getCPUusage() {
+    public float getCPUusage() {
         return CPUusage;
     }
 
-    public TopProcessDetail setCPUusage(String CPUusage) {
+    public TopProcessDetail setCPUusage(float CPUusage) {
         this.CPUusage = CPUusage;
         return this;
     }
@@ -75,11 +75,11 @@ public class TopProcessDetail {
         return this;
     }
 
-    public String getMem() {
+    public float getMem() {
         return Mem;
     }
 
-    public TopProcessDetail setMem(String mem) {
+    public TopProcessDetail setMem(float mem) {
         Mem = mem;
         return this;
     }
