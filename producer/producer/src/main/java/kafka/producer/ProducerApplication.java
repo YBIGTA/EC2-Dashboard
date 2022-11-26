@@ -32,20 +32,20 @@ public class ProducerApplication {
 		SpringApplication.run(ProducerApplication.class, args);
 
 
-//		final String TOPIC_NAME = "fooo";
-//		String bootstrapServer = args[0] + ":9092";
-//		System.out.println("bootstrap server : " + bootstrapServer);
-//
-//
-//		Properties properties = new Properties();
-//		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-//		properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-//		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class.getName());
-//		/*
-//		JSONSERIALIZER ADD_TYPE_INFO_HEADERS can serializer infer type of JSON Object
-//		 */
-//		properties.put(JsonSerializer.ADD_TYPE_INFO_HEADERS,HardWareUsageDAO.class.getName());
-//		KafkaProducer<String, HardWareUsageDAO> producer = new KafkaProducer<>(properties);
+		final String TOPIC_NAME = "fooo";
+		String bootstrapServer = args[0] + ":9092";
+		System.out.println("bootstrap server : " + bootstrapServer);
+
+
+		Properties properties = new Properties();
+		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+		properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+		properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class.getName());
+		/*
+		JSONSERIALIZER ADD_TYPE_INFO_HEADERS can serializer infer type of JSON Object
+		 */
+		properties.put(JsonSerializer.ADD_TYPE_INFO_HEADERS,HardWareUsageDAO.class.getName());
+		KafkaProducer<String, HardWareUsageDAO> producer = new KafkaProducer<>(properties);
 
 
 		// object to HardWareUsageDAO
@@ -135,9 +135,8 @@ public class ProducerApplication {
 
 
 			hardWareUsageDAO.setCPU(cpuDetail).setDISK(diskDetail).setMEM(memDetail).setTopRateProcess((ArrayList<TopProcessDetail>) topRateProcess);
-			System.out.println(hardWareUsageDAO);
 
-			/*
+
 			// sending kafka
 			ProducerRecord<String, HardWareUsageDAO> record = new ProducerRecord<String, HardWareUsageDAO>(TOPIC_NAME, hardWareUsageDAO);
 			try {
@@ -148,7 +147,7 @@ public class ProducerApplication {
 				e.printStackTrace();
 			}
 
-			 */
+
 
 		}
 	}
